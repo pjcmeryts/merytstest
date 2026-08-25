@@ -1,12 +1,12 @@
 name: 5-Tage Wettervorhersage Berlin
- 
+
 on:
   push:
     branches: [ "main" ]
   schedule:
     - cron: '0 7 * * *' # Startet täglich automatisch um 07:00 Uhr UTC
   workflow_dispatch: # Ermöglicht manuelles Ausführen
- 
+
 jobs:
   fetch-weather:
     runs-on: ubuntu-latest
@@ -16,23 +16,28 @@ jobs:
         with:
           script: |
             // Open-Meteo API URL für Berlin (52.52, 13.41)
-            const url = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=5&timezone=Europe/Berlin%27;
+            const url = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=5&timezone=Europe/Berlin';
+            
             const response = await fetch(url);
             const data = await response.json();
+            
             const daily = data.daily;
+            
             let markdownTable = '### 🌤️ 5-Tage-Wettervorhersage für Berlin\n\n';
             markdownTable += '| Datum | Max Temp (°C) | Min Temp (°C) | Niederschlag (mm) |\n';
             markdownTable += '| :--- | :---: | :---: | :---: |\n';
+            
             for (let i = 0; i < daily.time.length; i++) {
               const date = daily.time[i];
               const maxTemp = daily.temperature_2m_max[i];
               const minTemp = daily.temperature_2m_min[i];
               const rain = daily.precipitation_sum[i];
+              
               markdownTable += `| ${date} | ${maxTemp}°C | ${minTemp}°C | ${rain} mm |\n`;
             }
- 
+
             // Ausgeben im Workflow-Log
             console.log(markdownTable);
- 
+
             // In die GitHub Step Summary schreiben (grafische Übersicht auf der UI)
             await core.summary.addRaw(markdownTable).write();
