@@ -16,7 +16,7 @@
   <div class="card">
     <h1>🌤️ 5-Tage Wettervorhersage Berlin</h1>
     <canvas id="weatherChart"></canvas>
-    <div class="footer">Zuletzt aktualisiert: 10.9.2026, 14:02:53</div>
+    <div class="footer">Zuletzt aktualisiert: 11.9.2026, 14:01:18</div>
   </div>
 
   <script>
@@ -24,11 +24,11 @@
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["2026-09-10","2026-09-11","2026-09-12","2026-09-13","2026-09-14"],
+        labels: ["2026-09-11","2026-09-12","2026-09-13","2026-09-14","2026-09-15"],
         datasets: [
           {
             label: 'Höchsttemperatur (°C)',
-            data: [18.8,20.7,21.3,19.4,17.7],
+            data: [20,21.5,18,17.8,23.6],
             borderColor: '#ef4444',
             backgroundColor: 'rgba(239, 68, 68, 0.1)',
             fill: true,
@@ -36,7 +36,7 @@
           },
           {
             label: 'Tiefsttemperatur (°C)',
-            data: [13.5,12.9,14.7,14.8,11.4],
+            data: [11.7,14.8,15.7,13.8,10.4],
             borderColor: '#3b82f6',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             fill: true,
